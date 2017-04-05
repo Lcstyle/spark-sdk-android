@@ -13,20 +13,22 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @ParametersAreNonnullByDefault
 public class SignUpInfo implements Parcelable {
-    private String username, password;
+    private String username, password, email;
     @SerializedName("grant_type") @Nullable
     private String grantType;
     @SerializedName("account_info") @Nullable
     private AccountInfo accountInfo;
 
-    public SignUpInfo(String username, String password) {
+    public SignUpInfo(String username, String password, String email) {
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
-    public SignUpInfo(String username, String password, AccountInfo accountInfo) {
+    public SignUpInfo(String username, String password, String email, AccountInfo accountInfo) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.accountInfo = accountInfo;
     }
 
@@ -36,6 +38,10 @@ public class SignUpInfo implements Parcelable {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Nullable
@@ -66,6 +72,7 @@ public class SignUpInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.username);
         dest.writeString(this.password);
+        dest.writeString(this.email);
         dest.writeString(this.grantType);
         dest.writeParcelable(this.accountInfo, flags);
     }
@@ -73,6 +80,7 @@ public class SignUpInfo implements Parcelable {
     protected SignUpInfo(Parcel in) {
         this.username = in.readString();
         this.password = in.readString();
+        this.email = in.readString();
         this.grantType = in.readString();
         this.accountInfo = in.readParcelable(AccountInfo.class.getClassLoader());
     }
